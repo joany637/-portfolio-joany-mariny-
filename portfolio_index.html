@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Joany Mariny — Desarrolladora Full Stack</title>
+<meta name="description" content="Portafolio de Joany Mariny, desarrolladora Full Stack. Proyectos: News Explorer y Around the U.S." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #fbf9ff;
+    --bg-card: #f4effb;
+    --ink: #2e2a38;
+    --ink-strong: #1f1b29;
+    --ink-soft: #6b6379;
+    --accent: #6d4bb0;
+    --accent-soft: #c9aeea;
+    --line: #e3d9f2;
+    --serif: "Fraunces", Georgia, serif;
+    --sans: "Inter", system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: var(--accent); text-decoration: none; }
+  a:hover, a:focus-visible { text-decoration: underline; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ---------- Header ---------- */
+  header.intro {
+    padding: 88px 0 56px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .eyebrow-note {
+    display: inline-block;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 15px;
+    color: var(--accent);
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    padding: 6px 14px;
+    border-radius: 3px;
+    transform: rotate(-1.1deg);
+    margin-bottom: 28px;
+  }
+
+  h1 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 48px;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    margin: 0 0 10px;
+    color: var(--ink-strong);
+  }
+
+  .role {
+    font-size: 19px;
+    color: var(--accent);
+    font-weight: 600;
+    margin: 0 0 22px;
+  }
+
+  .intro-copy {
+    max-width: 58ch;
+    font-size: 17px;
+    color: var(--ink);
+  }
+
+  .contact-row {
+    margin-top: 28px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+    font-size: 15px;
+    color: var(--ink-soft);
+  }
+
+  .contact-row a { color: var(--ink); font-weight: 600; }
+
+  /* ---------- Sections ---------- */
+  section { padding: 56px 0; }
+  section + section { border-top: 1px solid var(--line); }
+
+  .section-label {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 15px;
+    color: var(--ink-soft);
+    margin: 0 0 18px;
+  }
+
+  .about-copy {
+    max-width: 62ch;
+    font-size: 17px;
+  }
+
+  .about-copy p + p { margin-top: 16px; }
+
+  /* ---------- Project case studies ---------- */
+  .project {
+    padding: 36px 32px;
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    margin-bottom: 28px;
+  }
+  .project:last-child { margin-bottom: 0; }
+
+  .project h3 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 27px;
+    margin: 0 0 6px;
+    color: var(--ink-strong);
+  }
+
+  .project .tagline {
+    font-size: 16px;
+    color: var(--ink-soft);
+    margin: 0 0 22px;
+  }
+
+  .kv {
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    gap: 6px 18px;
+    margin-bottom: 18px;
+  }
+  .kv dt {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+    padding-top: 2px;
+  }
+  .kv dd {
+    margin: 0;
+    font-size: 15.5px;
+  }
+  .kv dd ul { margin: 0; padding-left: 18px; }
+  .kv dd li + li { margin-top: 4px; }
+
+  .stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 20px 0 22px;
+  }
+  .stack span {
+    font-size: 13px;
+    font-weight: 600;
+    background: #fff;
+    border: 1px solid var(--line);
+    color: var(--ink);
+    padding: 4px 10px;
+    border-radius: 3px;
+  }
+
+  .proj-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    font-size: 15px;
+    font-weight: 600;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+  }
+
+  /* ---------- Footer ---------- */
+  footer {
+    padding: 48px 0 80px;
+    font-size: 15px;
+    color: var(--ink-soft);
+  }
+  footer .contact-row { margin-top: 12px; }
+
+  @media (max-width: 600px) {
+    header.intro { padding: 56px 0 40px; }
+    h1 { font-size: 36px; }
+    section { padding: 40px 0; }
+    .project { padding: 26px 20px; }
+    .kv { grid-template-columns: 1fr; gap: 2px; }
+    .kv dt { padding-top: 8px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="wrap">
+    <header class="intro">
+      <span class="eyebrow-note">desarrolladora full stack, con foco en la experiencia de quien usa lo que construyo</span>
+      <h1>Joany Mariny</h1>
+      <p class="role">Desarrolladora Full Stack</p>
+      <p class="intro-copy">
+        Construyo aplicaciones de punta a punta: interfaz, servidor y base de datos.
+        Me enfoco en que lo que construyo tenga sentido para quien lo usa del otro lado,
+        no solo en que el código funcione.
+      </p>
+      <div class="contact-row">
+        <a href="mailto:jmariny17@gmail.com">jmariny17@gmail.com</a>
+        <span>·</span>
+        <a href="https://www.linkedin.com/in/joany-mariny/" target="_blank" rel="noopener">LinkedIn</a>
+        <span>·</span>
+        <a href="https://github.com/joany637" target="_blank" rel="noopener">GitHub</a>
+        <span>·</span>
+        <span>Esmeraldas, Ecuador — disponible remoto</span>
+      </div>
+    </header>
+
+    <section id="about">
+      <p class="section-label">sobre mí</p>
+      <div class="about-copy">
+        <p>
+          Desarrolladora Full Stack con foco en experiencia de usuario: construyo con React,
+          Node.js y MongoDB, pensando siempre en cómo se siente usar lo que estoy construyendo,
+          no solo en que funcione técnicamente.
+        </p>
+        <p>
+          Mi proyecto más completo, News Explorer, lo llevé de cero a producción real:
+          front-end, back-end propio, base de datos en la nube y un servidor que configuré
+          yo misma. Abajo cuento este y otros proyectos.
+        </p>
+      </div>
+    </section>
+
+    <section id="projects">
+      <p class="section-label">proyectos</p>
+
+      <article class="project">
+        <h3>News Explorer</h3>
+        <p class="tagline">Buscador de noticias con cuentas de usuario y artículos guardados.</p>
+
+        <dl class="kv">
+          <dt>Desafío</dt>
+          <dd>Construir un proyecto full stack real, no solo un front-end conectado a una API pública — con mi propio servidor, mi propia base de datos, y usuarios reales que se registran e inician sesión.</dd>
+
+          <dt>Proceso</dt>
+          <dd>
+            <ul>
+              <li>Front-end en React: búsqueda, validación de formularios en tiempo real, rutas protegidas y contexto de usuario.</li>
+              <li>Back-end propio en Express + MongoDB, con autenticación por JWT y endpoints REST para guardar artículos.</li>
+              <li>Desplegué el back-end en una VM de Google Cloud (con dominio propio y HTTPS vía Let's Encrypt) y el front-end en Vercel.</li>
+            </ul>
+          </dd>
+
+          <dt>Resultado</dt>
+          <dd>Una app funcionando en producción de punta a punta: cualquiera puede registrarse, buscar noticias, y guardar las que le interesen — persistidas en una base de datos real.</dd>
+        </dl>
+
+        <div class="stack">
+          <span>React</span><span>React Router</span><span>Node.js</span><span>Express</span>
+          <span>MongoDB</span><span>JWT</span><span>Google Cloud</span><span>Vercel</span>
+        </div>
+
+        <div class="proj-links">
+          <a href="https://news-explorer-beryl-phi.vercel.app" target="_blank" rel="noopener">Demo en vivo →</a>
+          <a href="https://github.com/joany637/news-explorer-frontend" target="_blank" rel="noopener">Repo front-end →</a>
+          <a href="https://github.com/joany637/news-explorer-backend" target="_blank" rel="noopener">Repo back-end →</a>
+        </div>
+      </article>
+
+      <article class="project">
+        <h3>Rediseño: formulario de soporte al cliente</h3>
+        <p class="tagline">Un formulario de contacto pensado para que el mensaje llegue completo la primera vez.</p>
+
+        <dl class="kv">
+          <dt>Desafío</dt>
+          <dd>Los formularios de contacto genéricos rara vez guían a la persona a dar la información que el equipo de soporte necesita: consultas sin categorizar, incompletas, o sin confirmación de envío.</dd>
+
+          <dt>Proceso</dt>
+          <dd>
+            <ul>
+              <li>Categorización de la consulta desde el envío.</li>
+              <li>Validación en tiempo real con mensajes específicos por campo.</li>
+              <li>Contador de caracteres y campo de prioridad.</li>
+              <li>Estado de confirmación real después de enviar.</li>
+            </ul>
+          </dd>
+
+          <dt>Resultado</dt>
+          <dd>Un formulario funcional que reduce la ambigüedad desde el primer envío — podés probarlo en la página del proyecto.</dd>
+        </dl>
+
+        <div class="stack">
+          <span>HTML</span><span>CSS</span><span>JavaScript</span><span>Validación de formularios</span>
+        </div>
+
+        <div class="proj-links">
+          <a href="proyecto-formulario-soporte.html">Ver caso completo + demo en vivo →</a>
+        </div>
+      </article>
+
+      <article class="project">
+        <h3>Around the U.S. — Autenticación</h3>
+        <p class="tagline">Registro e inicio de sesión reales para una red social de fotos.</p>
+
+        <dl class="kv">
+          <dt>Desafío</dt>
+          <dd>La app ya mostraba y editaba fotos, pero cualquiera podía entrar y modificar todo. Necesitaba autenticación real, no simulada.</dd>
+
+          <dt>Proceso</dt>
+          <dd>
+            <ul>
+              <li>Implementé registro e inicio de sesión con tokens JWT.</li>
+              <li>Protegí las rutas del front-end para que solo usuarios autenticados vean el contenido.</li>
+              <li>Conecté el front-end en React con un back-end propio en Express y MongoDB.</li>
+            </ul>
+          </dd>
+
+          <dt>Resultado</dt>
+          <dd>Ahora hace falta iniciar sesión para ver o editar el contenido de la galería.</dd>
+        </dl>
+
+        <div class="stack">
+          <span>React</span><span>Express</span><span>MongoDB</span><span>JWT</span>
+        </div>
+
+        <div class="proj-links">
+          <a href="https://github.com/joany637/web_project_around_auth" target="_blank" rel="noopener">Repositorio →</a>
+        </div>
+      </article>
+
+      <p style="font-size: 15px; color: var(--ink-soft);">Más código en <a href="https://github.com/joany637" target="_blank" rel="noopener">GitHub</a>.</p>
+    </section>
+
+    <footer>
+      <p class="section-label">contacto</p>
+      <p>¿Hablamos? Escribime, mandame un mensaje por LinkedIn, o mirá el resto de mi código en GitHub.</p>
+      <div class="contact-row">
+        <a href="mailto:jmariny17@gmail.com">jmariny17@gmail.com</a>
+        <span>·</span>
+        <a href="https://www.linkedin.com/in/joany-mariny/" target="_blank" rel="noopener">LinkedIn</a>
+        <span>·</span>
+        <a href="https://github.com/joany637" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </footer>
+  </div>
+
+</body>
+</html>

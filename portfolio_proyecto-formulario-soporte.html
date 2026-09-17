@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Rediseño: Formulario de soporte — Joany Mariny</title>
+<meta name="description" content="Rediseño e implementación de un formulario de soporte al cliente, pensado para reducir la ambigüedad desde el primer envío." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #fbf9ff;
+    --bg-card: #f4effb;
+    --ink: #2e2a38;
+    --ink-strong: #1f1b29;
+    --ink-soft: #6b6379;
+    --accent: #6d4bb0;
+    --accent-soft: #c9aeea;
+    --line: #e3d9f2;
+    --ok: #3f8f5f;
+    --ok-bg: #eaf6ef;
+    --err: #b23b3b;
+    --serif: "Fraunces", Georgia, serif;
+    --sans: "Inter", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent); }
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+
+  .back-link { display: block; padding: 28px 0 0; font-size: 14px; }
+
+  header.intro { padding: 24px 0 48px; border-bottom: 1px solid var(--line); }
+  .eyebrow-note {
+    display: inline-block; font-family: var(--serif); font-style: italic; font-size: 15px;
+    color: var(--accent); background: var(--bg-card); border: 1px solid var(--line);
+    padding: 6px 14px; border-radius: 3px; transform: rotate(-1.1deg); margin-bottom: 24px;
+  }
+  h1 { font-family: var(--serif); font-weight: 500; font-size: 38px; line-height: 1.12; margin: 0 0 14px; color: var(--ink-strong); }
+  .lede { max-width: 60ch; font-size: 17px; }
+  .stack-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 22px; }
+  .stack-row span { font-size: 13px; font-weight: 600; background: #fff; border: 1px solid var(--line); padding: 4px 10px; border-radius: 3px; }
+
+  section { padding: 48px 0; }
+  section + section { border-top: 1px solid var(--line); }
+  .section-label { font-family: var(--serif); font-style: italic; font-size: 15px; color: var(--ink-soft); margin: 0 0 18px; }
+
+  .kv { display: grid; grid-template-columns: 110px 1fr; gap: 6px 18px; margin-bottom: 18px; }
+  .kv dt { font-size: 13px; font-weight: 600; color: var(--accent); padding-top: 2px; }
+  .kv dd { margin: 0; font-size: 15.5px; }
+  .kv dd ul { margin: 0; padding-left: 18px; }
+  .kv dd li + li { margin-top: 4px; }
+
+  /* ---------- Demo form ---------- */
+  .demo-shell {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 32px;
+  }
+  .demo-label { font-size: 13px; font-weight: 700; color: var(--accent); text-transform: none; margin: 0 0 4px; }
+  .demo-title { font-family: var(--serif); font-size: 22px; margin: 0 0 6px; color: var(--ink-strong); }
+  .demo-copy { font-size: 15px; color: var(--ink-soft); margin: 0 0 26px; }
+
+  .field { margin-bottom: 20px; }
+  .field label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px; color: var(--ink-strong); }
+  .field .req { color: var(--err); }
+  .field input, .field select, .field textarea {
+    width: 100%; font: inherit; font-size: 15.5px; padding: 11px 12px;
+    border: 1.5px solid var(--line); border-radius: 4px; background: #fff; color: var(--ink);
+  }
+  .field textarea { resize: vertical; min-height: 96px; }
+  .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--accent); }
+  .field.has-error input, .field.has-error select, .field.has-error textarea { border-color: var(--err); }
+  .error-msg { display: none; color: var(--err); font-size: 13px; margin-top: 6px; }
+  .field.has-error .error-msg { display: block; }
+  .char-count { display: flex; justify-content: flex-end; font-size: 12px; color: var(--ink-soft); margin-top: 4px; }
+
+  .submit-btn {
+    font: inherit; font-weight: 700; font-size: 15.5px; color: #fff; background: var(--accent);
+    border: none; padding: 13px 26px; border-radius: 4px; cursor: pointer;
+  }
+  .submit-btn:hover { background: #5c3f99; }
+  .submit-btn:disabled { opacity: .6; cursor: not-allowed; }
+
+  .success-state { display: none; text-align: center; padding: 20px 0; }
+  .success-state.visible { display: block; }
+  .success-check {
+    width: 52px; height: 52px; margin: 0 auto 16px; border-radius: 50%;
+    background: var(--ok-bg); color: var(--ok); display: flex; align-items: center; justify-content: center;
+    font-size: 26px; transform: scale(0); animation: pop .28s ease-out forwards;
+  }
+  @keyframes pop { to { transform: scale(1); } }
+  @media (prefers-reduced-motion: reduce) { .success-check { animation: none; transform: scale(1); } }
+  .success-state h3 { font-family: var(--serif); font-size: 21px; margin: 0 0 6px; color: var(--ink-strong); }
+  .success-state p { color: var(--ink-soft); font-size: 15px; margin: 0 0 20px; }
+  .reset-btn {
+    font: inherit; font-size: 14.5px; font-weight: 600; color: var(--accent); background: none;
+    border: 1.5px solid var(--accent-soft); padding: 9px 18px; border-radius: 4px; cursor: pointer;
+  }
+  .reset-btn:hover { background: #fff; }
+
+  .demo-note { font-size: 13px; color: var(--ink-soft); margin-top: 18px; }
+
+  footer { padding: 40px 0 64px; font-size: 15px; color: var(--ink-soft); }
+
+  @media (max-width: 600px) {
+    h1 { font-size: 29px; }
+    .demo-shell { padding: 22px 18px; }
+    .kv { grid-template-columns: 1fr; gap: 2px; }
+    .kv dt { padding-top: 8px; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="wrap">
+    <a class="back-link" href="index.html">← Volver al portafolio</a>
+
+    <header class="intro">
+      <span class="eyebrow-note">desarrolladora full stack, con foco en la experiencia de quien usa lo que construyo</span>
+      <h1>Rediseño: formulario de soporte al cliente</h1>
+      <p class="lede">
+        Un formulario de contacto pensado para que el mensaje llegue completo la primera vez,
+        no después de dos o tres idas y vueltas por correo.
+      </p>
+      <div class="stack-row">
+        <span>HTML</span><span>CSS</span><span>JavaScript</span><span>Validación de formularios</span><span>Diseño responsive</span>
+      </div>
+    </header>
+
+    <section id="case-study">
+      <p class="section-label">el caso</p>
+      <dl class="kv">
+        <dt>Desafío</dt>
+        <dd>Los formularios de contacto genéricos rara vez guían a la persona a dar la información que el equipo de soporte necesita: llegan consultas sin categorizar, incompletas, o tan cortas que requieren otra vuelta de emails para resolverse.</dd>
+
+        <dt>Proceso</dt>
+        <dd>
+          <ul>
+            <li>Agregué un campo de categoría, para que la consulta llegue clasificada desde el envío (no después, a mano).</li>
+            <li>Validación en tiempo real con mensajes específicos por campo, no solo un borde rojo genérico.</li>
+            <li>Contador de caracteres en el mensaje, para dar una señal visual de "esto es muy corto" antes de enviar.</li>
+            <li>Un estado de confirmación real después de enviar, en vez de dejar a la persona sin saber si funcionó.</li>
+          </ul>
+        </dd>
+
+        <dt>Resultado</dt>
+        <dd>Un formulario funcional (podés probarlo abajo) que reduce la ambigüedad desde el primer envío: para cuando el equipo de soporte lo recibe, ya sabe qué es, qué tan urgente es, y cómo contactar a la persona.</dd>
+
+        <dt>Me enorgullece</dt>
+        <dd>Diseñarlo pensando en quién recibe el formulario del otro lado, no solo en quien lo llena — un detalle que suele pasarse por alto.</dd>
+
+        <dt>Mejoraría</dt>
+        <dd>Conectarlo a un backend real con notificaciones por correo y un panel para que el equipo de soporte vea las consultas entrantes.</dd>
+      </dl>
+    </section>
+
+    <section id="demo">
+      <p class="section-label">probalo vos misma / vos mismo</p>
+
+      <div class="demo-shell">
+        <p class="demo-label">Formulario de soporte</p>
+        <h2 class="demo-title">¿En qué te podemos ayudar?</h2>
+        <p class="demo-copy">Completá los datos y te contactamos por el medio que elijas. Los campos marcados con * son obligatorios.</p>
+
+        <form id="supportForm" novalidate>
+          <div class="field" id="field-category">
+            <label for="category">Categoría de la consulta <span class="req">*</span></label>
+            <select id="category" name="category">
+              <option value="">Seleccioná una opción</option>
+              <option value="billing">Facturación</option>
+              <option value="technical">Problema técnico</option>
+              <option value="account">Mi cuenta</option>
+              <option value="other">Otro</option>
+            </select>
+            <p class="error-msg">Elegí una categoría para que tu consulta llegue al equipo correcto.</p>
+          </div>
+
+          <div class="field" id="field-name">
+            <label for="name">Nombre <span class="req">*</span></label>
+            <input type="text" id="name" name="name" placeholder="Tu nombre" />
+            <p class="error-msg">Contanos cómo te llamás.</p>
+          </div>
+
+          <div class="field" id="field-email">
+            <label for="email">Correo electrónico <span class="req">*</span></label>
+            <input type="email" id="email" name="email" placeholder="vos@correo.com" />
+            <p class="error-msg">Necesitamos un correo válido para responderte.</p>
+          </div>
+
+          <div class="field" id="field-priority">
+            <label for="priority">Prioridad</label>
+            <select id="priority" name="priority">
+              <option value="normal">Normal — puede esperar unos días</option>
+              <option value="high">Alta — me está bloqueando algo</option>
+              <option value="urgent">Urgente — no puedo usar el servicio</option>
+            </select>
+          </div>
+
+          <div class="field" id="field-message">
+            <label for="message">Contanos qué pasó <span class="req">*</span></label>
+            <textarea id="message" name="message" placeholder="Cuanto más contexto nos des, más rápido podemos ayudarte."></textarea>
+            <div class="char-count"><span id="charCount">0</span>/500</div>
+            <p class="error-msg">Cuanto más contexto nos des, más rápido podemos ayudarte (mínimo 20 caracteres).</p>
+          </div>
+
+          <button type="submit" class="submit-btn" id="submitBtn">Enviar consulta</button>
+        </form>
+
+        <div class="success-state" id="successState">
+          <div class="success-check">✓</div>
+          <h3>Recibimos tu consulta</h3>
+          <p>Te vamos a contactar pronto por el correo que dejaste.</p>
+          <button type="button" class="reset-btn" id="resetBtn">Enviar otra consulta</button>
+        </div>
+
+        <p class="demo-note">Demo de front-end: el envío es simulado, no se manda ningún correo real.</p>
+      </div>
+    </section>
+
+    <footer>
+      <p>¿Charlamos sobre este proyecto? <a href="mailto:jmariny17@gmail.com">jmariny17@gmail.com</a> · <a href="https://www.linkedin.com/in/joany-mariny/" target="_blank" rel="noopener">LinkedIn</a></p>
+    </footer>
+  </div>
+
+<script>
+  const form = document.getElementById('supportForm');
+  const successState = document.getElementById('successState');
+  const submitBtn = document.getElementById('submitBtn');
+  const resetBtn = document.getElementById('resetBtn');
+  const messageEl = document.getElementById('message');
+  const charCount = document.getElementById('charCount');
+
+  messageEl.addEventListener('input', () => {
+    charCount.textContent = messageEl.value.length;
+  });
+
+  function setError(fieldId, show) {
+    document.getElementById(fieldId).classList.toggle('has-error', show);
+  }
+
+  function validate() {
+    let ok = true;
+
+    const category = document.getElementById('category').value;
+    setError('field-category', !category);
+    if (!category) ok = false;
+
+    const name = document.getElementById('name').value.trim();
+    setError('field-name', !name);
+    if (!name) ok = false;
+
+    const email = document.getElementById('email').value.trim();
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    setError('field-email', !emailOk);
+    if (!emailOk) ok = false;
+
+    const message = messageEl.value.trim();
+    setError('field-message', message.length < 20);
+    if (message.length < 20) ok = false;
+
+    return ok;
+  }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!validate()) return;
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Enviando…';
+
+    setTimeout(() => {
+      form.style.display = 'none';
+      successState.classList.add('visible');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Enviar consulta';
+    }, 600);
+  });
+
+  resetBtn.addEventListener('click', () => {
+    form.reset();
+    charCount.textContent = '0';
+    ['field-category', 'field-name', 'field-email', 'field-message'].forEach(id => setError(id, false));
+    successState.classList.remove('visible');
+    form.style.display = 'block';
+  });
+</script>
+</body>
+</html>
